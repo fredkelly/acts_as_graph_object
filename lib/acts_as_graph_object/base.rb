@@ -11,7 +11,7 @@ module ActsAsGraphObject
       
       # try all the default properties first
       DEFAULT_PROPERTIES.each do |property|
-        if self.responds_to?(property)
+        if self.respond_to?(property)
           properties[property] = self.send(property)
         end
       end
