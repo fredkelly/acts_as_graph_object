@@ -15,16 +15,16 @@ ActiveRecord extension that maps models to Facebook Open Graph objects.
 
 5\. Automatically handle arrays, i.e. `:cast => ['Tom Cruise', 'Kelly McGillis', 'Val Kilmer']` becomes:
 ```html
-  <meta property="my-app:cast" content="Tom Cruise" />
-  <meta property="my-app:cast" content="Kelly McGillis" />
-  <meta property="my-app:cast" content="Val Kilmer" />
+<meta property="my-app:cast" content="Tom Cruise" />
+<meta property="my-app:cast" content="Kelly McGillis" />
+<meta property="my-app:cast" content="Val Kilmer" />
 ```
 
 6\. Keep it unobtrusive! no heavy configuration in models, something simple, e.g.
 ```ruby
-  class Movie < ActiveRecord::Base
-    acts_as_graph_object :custom => [:director, :writer, :cast]
-  end
+class Movie < ActiveRecord::Base
+  acts_as_graph_object :custom => [:director, :writer, :cast]
+end
 ```
   This would map all standard properties `title`, `description`, `image`, `app_id` etc along with the custom properties `director`, `writer` & `cast`.
   
