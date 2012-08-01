@@ -32,5 +32,5 @@ ActiveRecord extension that maps models to Facebook Open Graph objects.
 In order to use the built in @model.url method you need to set the following config option:
 ```
 # ./config/environments/production.rb
-routes.default_url_options[:host]= 'my-app.com'
+routes.default_url_options[:host] = 'my-app.com'
 ```

@@ -5,31 +5,39 @@ module ActsAsGraphObject
                           :latitude, :longitude, :street_address, :locality, :region,
                           :postal_code, :country_name, :email, :phone_number, :fax_number]
     
-    def acts_as_graph_object(options = {})
-      # our property/content pairs
-      properties = {}
+    def acts_as_graph_object(options = {})   
+      # url helpers for fallback url method
+      delegate :url_helpers, to: 'Rails.application.routes'
+      delegate :configuration, to: 'ActsAsGraphObject'
       
-      # try all the default properties first
+      include InstanceMethods
+         
+      # our property/content pairs
+      @properties = {}
+      
+      # try all the default og properties first
       DEFAULT_PROPERTIES.each do |property|
         if self.respond_to?(property)
-          properties[property] = self.send(property)
+          @properties[:og][property] = self.send(property)
         end
       end
       
-      # url helpers for fallback url method
-      delegate :url_helpers, to: 'Rails.application.routes'
+      puts title
       
-      include InstanceMethods
+      # add any custom properties
+      options[:custom].each do |property|
+        @properties[configuration.namespace.to_sym][property] = self.send(property)
+      end
     end
     
     module InstanceMethods
       # requires default_url_options[:host] to be set!
       def url
-        url_helpers.send("#{type}_url".downcase, self)
+        url_helpers.send("#{self.class}_url".downcase, self)
       end
       
       def type
-        self.class.name.underscore
+        [configuration.namespace, self.class.name.underscore].join(':')
       end
     end
   end
