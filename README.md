@@ -27,3 +27,10 @@ ActiveRecord extension that maps models to Facebook Open Graph objects.
   end
 ```
   This would map all standard properties `title`, `description`, `image`, `app_id` etc along with the custom properties `director`, `writer` & `cast`.
+  
+### Default URL Method
+In order to use the built in @model.url method you need to set the following config option:
+```
+# ./config/environments/production.rb
+routes.default_url_options[:host]= 'my-app.com'
+```
