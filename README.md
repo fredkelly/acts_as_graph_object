@@ -21,7 +21,7 @@ end
 ```
 
 ##### Default URL Method
-In order to use the built in @model.url method you need to set the following config option:
+In order to use the built in `@model.url` method you need to set the following config option:
 ```ruby
 # app/config/environments/production.rb
 routes.default_url_options[:host] = 'my-app.com'
