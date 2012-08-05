@@ -27,7 +27,46 @@ class Movie < ActiveRecord::Base
 end
 ```
   This would map all standard properties `title`, `description`, `image`, `app_id` etc along with the custom properties `director`, `writer` & `cast`.
+
+### Installation
+```
+gem install acts_as_graph_object
+```
+Then just add the dependancy to your `Gemfile`.
+
+### Usage
+#### Add acts_as_graph_object:
+```
+# app/models/movie.rb
+class Movie < ActiveRecord::Base
+  acts_as_graph_object :custom => [:director, :writer, :cast]
   
+  def cast
+  	...
+  end
+end
+```
+#### Outputting meta tags
+Use the `graph_object_tags_for(@movie)` helper to output the resulting `<meta>` tags. You can use this in combination with `content_for` to push the results into your `<head>`:
+```html
+# app/views/layouts/application.html.erb    
+<head>
+    <%= yield :meta_tags %>
+</head>
+
+# app/views/movies/show.html.erb
+<% content_for :meta_tags, graph_object_tags_for(@movie) %>
+```
+#### Overriding from view
+If you want to override a value from the view (for example to use a `url_for` helper):
+```html
+# app/views/movies/show.html.erb
+<% content_for :meta_tags, graph_object_tags_for(@movie, :url => movie_url(@movie)) %>
+```
+
+#### Notes
+This is my first gem so things are a bit rough around the edges, all feedback is happily welcomed :) - please fork/fix to your heart's content.
+
 ### Default URL Method
 In order to use the built in @model.url method you need to set the following config option:
 ```
