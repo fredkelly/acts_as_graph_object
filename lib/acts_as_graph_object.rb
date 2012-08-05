@@ -1,5 +1,3 @@
-require "acts_as_graph_object/configuration"
-require "acts_as_graph_object/base"
-require "acts_as_graph_object/helpers"
-require "acts_as_graph_object/railite"
-require "acts_as_graph_object/version"
+%W(configuration base helpers railite version).each do |file|
+  require "acts_as_graph_object/#{file}"
+end
