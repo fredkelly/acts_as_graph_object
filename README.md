@@ -82,6 +82,6 @@ class Movie < ActiveRecord::Base
   acts_as_graph_object :custom => [:director, :writer, :cast]
 end
 ```
-  This would map all standard properties `title`, `description`, `image`, `app_id` etc along with the custom properties `director`, `writer` & `cast`.
+This would map all standard properties `title`, `description`, `image`, `app_id` etc along with the custom properties `director`, `writer` & `cast`.
 
 ```
