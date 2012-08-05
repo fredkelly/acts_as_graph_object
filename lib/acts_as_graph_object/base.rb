@@ -13,6 +13,7 @@ module ActsAsGraphObject
     
     module InstanceMethods
       # requires routes.default_url_options[:host] to be set!
+      # TODO: add warning message if method is called?
       def url
         url_helpers.send("#{self.class}_url".downcase, self)
       end
@@ -27,12 +28,12 @@ module ActsAsGraphObject
                               :latitude, :longitude, :street_address, :locality, :region,
                               :postal_code, :country_name, :email, :phone_number, :fax_number]
       
-        # our property/content pairs
+        # property/content pairs
         properties = {
           :og => {},
           :fb => {
             :app_id => configuration.app_id,
-            :admins => configuration.admins
+            :admins => configuration.admins.join(',')
           }
         }
             
@@ -43,10 +44,12 @@ module ActsAsGraphObject
           end
         end
             
-        # add any custom properties
-        options[:custom] ||= []
-        options[:custom].each do |property|
-          properties[configuration.namespace.to_sym][property] = self.send(property)
+        # add any custom properties..
+        unless options[:custom].empty?
+          properties[configuration.namespace] ||= {}
+          Array(options[:custom]).each do |property|
+            properties[configuration.namespace][property] = self.send(property)
+          end
         end
         
         properties

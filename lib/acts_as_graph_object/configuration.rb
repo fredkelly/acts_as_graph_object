@@ -20,5 +20,10 @@ module ActsAsGraphObject
     def initialize # :nodoc:
       # set any defaults in here
     end
+    
+    # symbolize namespace
+    def namespace=(namespace)
+      @namespace = namespace.to_sym
+    end
   end
 end
