@@ -83,5 +83,3 @@ class Movie < ActiveRecord::Base
 end
 ```
 This would map all standard properties `title`, `description`, `image`, `app_id` etc along with the custom properties `director`, `writer` & `cast`.
-
-```
