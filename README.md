@@ -22,12 +22,13 @@ end
 
 ##### Default URL Method
 In order to use the built in @model.url method you need to set the following config option:
-```
+```ruby
 # app/config/environments/production.rb
 routes.default_url_options[:host] = 'my-app.com'
+```
 
 #### Add acts_as_graph_object...
-```
+```ruby
 # app/models/movie.rb
 class Movie < ActiveRecord::Base
   acts_as_graph_object :custom => [:director, :writer, :cast]
