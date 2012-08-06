@@ -45,11 +45,9 @@ module ActsAsGraphObject
         end
             
         # add any custom properties..
-        unless options[:custom].empty?
-          properties[configuration.namespace] ||= {}
-          Array(options[:custom]).each do |property|
-            properties[configuration.namespace][property] = self.send(property)
-          end
+        properties[configuration.namespace] ||= {} unless options[:custom].nil?
+        Array(options[:custom]).each do |property|
+          properties[configuration.namespace][property] = self.send(property)
         end
         
         properties
