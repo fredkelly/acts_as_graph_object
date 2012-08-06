@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = "https://github.com/fredkelly/acts_as_graph_object"
   
   # requires Rails!
-  gem.add_runtime_dependency "rails",
+  gem.add_runtime_dependency "rails"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
