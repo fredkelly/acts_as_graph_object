@@ -26,8 +26,10 @@ end
 #### Default URL Method
 In order to use the built in `@model.url` method you need to set the following config option:
 
+```ruby
 # app/config/environments/production.rb
 routes.default_url_options[:host] = 'my-app.com'
+```
 
 #### Add acts\_as\_graph\_object...
 
@@ -46,7 +48,7 @@ end
 
 Use the `graph_object_tags_for(@movie)` helper to output the resulting `<meta>` tags. You can use this in combination with `content_for` to push the results into your `<head>`:
 
-```html
+```erb
 # app/views/layouts/application.html.erb    
 <head>
     <%= yield :meta_tags %>
@@ -59,7 +61,7 @@ Use the `graph_object_tags_for(@movie)` helper to output the resulting `<meta>` 
 #### Overriding from view
 If you want to override a value from the view (for example to use a `url_for` helper):
 
-```html
+```erb
 # app/views/movies/show.html.erb
 <% content_for :meta_tags, graph_object_tags_for(@movie, :url => movie_url(@movie)) %>
 ```
