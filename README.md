@@ -4,7 +4,7 @@ acts_as_graph_object
 ActiveRecord extension that maps models to Facebook Open Graph objects.
 
 ### Installation
-```
+```bash
 gem install acts_as_graph_object
 ```
 Then just add the dependancy to your `Gemfile`.
