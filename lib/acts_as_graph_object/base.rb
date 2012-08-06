@@ -15,7 +15,7 @@ module ActsAsGraphObject
       # requires routes.default_url_options[:host] to be set!
       # TODO: add warning message if method is called?
       def url
-        url_helpers.send("#{self.class}_url".downcase, self)
+        url_helpers.send("#{self.class}_url".downcase, self) rescue nil
       end
       
       def type
