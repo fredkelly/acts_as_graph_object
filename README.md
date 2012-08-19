@@ -66,6 +66,30 @@ If you want to override a value from the view (for example to use a `url_for` he
 <% content_for :meta_tags, graph_object_tags_for(@movie, :url => movie_url(@movie)) %>
 ```
 
+#### Alternative attribute names (v0.0.7)
+You can now use non-default names for the standard Open Graph properties and the Gem will attempt to pick these up. Here are the properties and their alternative names:
+```ruby
+# standard object properties & alternative names
+default_properties = {
+  :title           => [:name, :label],
+  :type            => [:kind, :group, :class],
+  :image           => [:picture, :photo],
+  :url             => [:permalink, :link],
+  :description     => [:info, :details],
+  :site_name       => [:site],
+  :latitude        => [:lat],
+  :longitude       => [:long],
+  :street_address  => [:address],
+  :locality        => [:locale, :area],
+  :region          => [:province, :territory],
+  :postal_code     => [:zip_code, :zip],
+  :country_name    => [:country],
+  :email           => [:email_address],
+  :phone_number    => [:phone],
+  :fax_number      => [:fax]
+}
+```
+
 #### Notes
 This is my first gem so things are a bit rough around the edges, all feedback is happily welcomed :) - please fork/fix to your heart's content.
 
@@ -96,3 +120,4 @@ end
 ```
 
 This would map all standard properties `title`, `description`, `image`, `app_id` etc along with the custom properties `director`, `writer` & `cast`.
+7\. **Write proper tests and documentation!**

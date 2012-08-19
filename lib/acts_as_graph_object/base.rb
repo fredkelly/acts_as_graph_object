@@ -1,6 +1,6 @@
 module ActsAsGraphObject
   module Base
-    def acts_as_graph_object(options = {})   
+    def acts_as_graph_object(options = {})
       # url helpers for fallback url method
       delegate :url_helpers, to: 'Rails.application.routes'
       delegate :configuration, to: 'ActsAsGraphObject'
@@ -23,12 +23,28 @@ module ActsAsGraphObject
       end
       
       def graph_properties
-        # standard object properties
-        default_properties = [:title, :type, :image, :url, :description, :site_name,
-                              :latitude, :longitude, :street_address, :locality, :region,
-                              :postal_code, :country_name, :email, :phone_number, :fax_number]
-      
+        # standard object properties & alternative names
+        default_properties = {
+          :title           => [:name, :label],
+          :type            => [:kind, :group, :class],
+          :image           => [:picture, :photo],
+          :url             => [:permalink, :link],
+          :description     => [:info, :details],
+          :site_name       => [:site],
+          :latitude        => [:lat],
+          :longitude       => [:long],
+          :street_address  => [:address],
+          :locality        => [:locale, :area],
+          :region          => [:province, :territory],
+          :postal_code     => [:zip_code, :zip],
+          :country_name    => [:country],
+          :email           => [:email_address],
+          :phone_number    => [:phone],
+          :fax_number      => [:fax]
+        }
+
         # property/content pairs
+        # we build this up to contain our final values
         properties = {
           :og => {},
           :fb => {
@@ -38,9 +54,11 @@ module ActsAsGraphObject
         }
             
         # try all the default og properties first
-        default_properties.each do |property|
-          if self.respond_to?(property)
-            properties[:og][property] = self.send(property)
+        default_properties.each do |property_name, alternatives|
+          ([property_name] + alternatives).each do |property|
+            if self.respond_to?(property)
+              properties[:og][property_name] = self.send(property)
+            end
           end
         end
             
