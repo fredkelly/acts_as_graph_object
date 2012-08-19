@@ -26,7 +26,7 @@ module ActsAsGraphObject
         # standard object properties & alternative names
         default_properties = {
           :title           => [:name, :label],
-          :type            => [:kind, :group, :class],
+          :type            => [:kind, :group],
           :image           => [:picture, :photo],
           :url             => [:permalink, :link],
           :description     => [:info, :details],
