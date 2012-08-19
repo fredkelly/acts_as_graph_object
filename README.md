@@ -82,7 +82,7 @@ default_properties = {
   :street_address  => [:address],
   :locality        => [:locale, :area],
   :region          => [:province, :territory],
-  :postal_code     => [:zip_code, :zip],
+  :postal_code     => [:post_code, :zip_code, :zip],
   :country_name    => [:country],
   :email           => [:email_address],
   :phone_number    => [:phone],
@@ -120,4 +120,5 @@ end
 ```
 
 This would map all standard properties `title`, `description`, `image`, `app_id` etc along with the custom properties `director`, `writer` & `cast`.
+
 7\. **Write proper tests and documentation!**

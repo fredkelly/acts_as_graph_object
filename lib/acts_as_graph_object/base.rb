@@ -36,7 +36,7 @@ module ActsAsGraphObject
           :street_address  => [:address],
           :locality        => [:locale, :area],
           :region          => [:province, :territory],
-          :postal_code     => [:zip_code, :zip],
+          :postal_code     => [:post_code, :zip_code, :zip],
           :country_name    => [:country],
           :email           => [:email_address],
           :phone_number    => [:phone],
