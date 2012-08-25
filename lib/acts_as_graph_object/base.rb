@@ -13,13 +13,20 @@ module ActsAsGraphObject
     
     module InstanceMethods
       # requires routes.default_url_options[:host] to be set!
+      # in nested associations parent is passed, e.g. @review.url(@movie)
       # TODO: add warning message if method is called?
-      def url
-        url_helpers.send("#{self.class}_url".downcase, self) rescue nil
+      def url(*args)
+        url_helpers.send([self].unshift(*args).map(&:class).join('_').downcase + '_url', *args.push(self)) rescue nil
       end
       
       def type
         [configuration.namespace, self.class.name.underscore].join(':')
+      end
+      
+      # helper for sending custom actions, e.g. (using Koala):
+      # user.put_connections('me', action('watch'), movie: @movie.url)
+      def action(name = '')
+        [configuration.namespace, name].join(':') unless name.empty?
       end
       
       def graph_properties
@@ -32,7 +39,7 @@ module ActsAsGraphObject
           :description     => [:info, :details],
           :site_name       => [:site],
           :latitude        => [:lat],
-          :longitude       => [:long],
+          :longitude       => [:lng],
           :street_address  => [:address],
           :locality        => [:locale, :area],
           :region          => [:province, :territory],
@@ -40,7 +47,8 @@ module ActsAsGraphObject
           :country_name    => [:country],
           :email           => [:email_address],
           :phone_number    => [:phone],
-          :fax_number      => [:fax]
+          :fax_number      => [:fax],
+          :determiner      => [:prefix]
         }
 
         # property/content pairs
