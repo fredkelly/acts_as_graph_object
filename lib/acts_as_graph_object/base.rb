@@ -16,6 +16,7 @@ module ActsAsGraphObject
       # in nested associations parent is passed, e.g. @review.url(@movie)
       # TODO: add warning message if method is called?
       def url(*args)
+        logger.warn "Using #{self.class.name}.url directly not recommended: please override in your model/view."
         url_helpers.send([self].unshift(*args).map(&:class).join('_').downcase + '_url', *args.push(self)) rescue nil
       end
       
