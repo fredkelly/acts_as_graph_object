@@ -19,7 +19,7 @@
 
         <header>
           <h1><img src="./images/logo.png" alt="Acts as Graph Object" /></h1>
-          <h2>ActiveRecord extension that maps models to Facebook Open Graph objects (by placing the relevant meta tags into your HTML).</h2>
+          <h2>ActiveRecord extension that maps models to <a href="http://ogp.me/">Facebook Open Graph</a> objects (by placing the relevant meta tags into your HTML).</h2>
         </header>
 
         <section id="downloads" class="clearfix">
@@ -31,32 +31,91 @@
         <hr>
 
         <section id="main_content">
-          <h3>Welcome to GitHub Pages.</h3>
+					<h2>Installation</h2>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+					<pre><code>gem install acts_as_graph_object</code></pre>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+					<p>Then just add the dependancy to your <code>Gemfile</code>.</p>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+					<h2>Usage</h2>
 
-<h3>Designer Templates</h3>
+					<h3>Configuration</h3>
+					
+<pre><code># app/config/initializers/acts_as_graph_object.rb
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+ActsAsGraphObject.configure do |config|
+  config.namespace = 'my-app'
+  config.app_id = 12345
+  config.admins = [1245, 6789]
+end</code></pre>
 
-<h3>Rather Drive Stick?</h3>
+					<h4>Default URL Method</h4>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+					<p>In order to use the built in <code>@model.url</code> method you need to set the following config option:</p>
 
-<h3>Authors and Contributors</h3>
+<pre><code># app/config/environments/production.rb
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+routes.default_url_options[:host] = 'my-app.com'</code></pre>
 
-<h3>Support or Contact</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+					<h4>Add acts_as_graph_object...</h4><br/>
+
+<pre><code># app/models/movie.rb
+
+class Movie &lt; ActiveRecord::Base
+  acts_as_graph_object :custom => [:director, :writer, :cast]
+  
+  def cast
+    ...
+  end
+end</code></pre>
+
+					<h4>Outputting meta tags</h4>
+
+					<p>Use the <code>graph_object_tags_for(@movie)</code> helper to output the resulting <code>&lt;meta&gt;</code> tags. You can use this in combination with <code>content_for</code> to push the results into your <code>&lt;head&gt;</code>:</p>
+
+<pre><code># app/views/layouts/application.html.erb
+
+&lt;head&gt;
+  &lt;%= yield :meta_tags %&gt;
+&lt;/head&gt;</pre></code>
+
+<pre><code># app/views/movies/show.html.erb
+
+&lt;% content_for :meta_tags, graph_object_tags_for(@movie) %&gt;</pre></code>
+
+					<h4>Overriding from view</h4>
+
+					<p>If you want to override a value from the view (for example to use a <code>url_for</code> helper):</p>
+
+<pre><code># app/views/movies/show.html.erb
+
+&lt;% content_for :meta_tags, graph_object_tags_for(@movie, :url => movie_url(@movie)) %&gt;</pre></code>
+
+					<h4>Alternative attribute names (v0.0.7)</h4>
+
+					<p>You can now use non-default names for the standard Open Graph properties and the Gem will attempt to pick these up. Here are the properties and their alternative names:
+
+<pre><code># standard object properties &amp; alternative names
+
+default_properties = {
+  :title           => [:name, :label],
+  :type            => [:kind, :group, :class],
+  :image           => [:picture, :photo],
+  :url             => [:permalink, :link],
+  :description     => [:info, :details],
+  :site_name       => [:site],
+  :latitude        => [:lat],
+  :longitude       => [:lng],
+  :street_address  => [:address],
+  :locality        => [:locale, :area],
+  :region          => [:province, :territory],
+  :postal_code     => [:post_code, :zip_code, :zip],
+  :country_name    => [:country],
+  :email           => [:email_address],
+  :phone_number    => [:phone],
+  :fax_number      => [:fax]
+}</pre></code>
         </section>
 
         <footer>
