@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["me@fredkelly.net"]
   gem.description   = %q{ActiveRecord extension that maps models to Facebook Open Graph objects.}
   gem.summary       = %q{Facebook Open Graph object mapper.}
-  gem.homepage      = "https://github.com/fredkelly/acts_as_graph_object"
+  gem.homepage      = "http://fredkelly.github.com/acts_as_graph_object/"
   
   # requires Rails!
   gem.add_runtime_dependency "rails"
