@@ -2,6 +2,12 @@
 
 ActiveRecord extension that maps models to Facebook Open Graph objects.
 
+## Links
+* [Project Page](http://fredkelly.github.com/acts_as_graph_object/)
+* [Documentation](http://rubydoc.info/gems/acts_as_graph_object/0.0.11/frames)
+* [![Build Status](https://travis-ci.org/fredkelly/acts_as_graph_object.png?branch=master)](https://travis-ci.org/fredkelly/acts_as_graph_object)
+* [![Dependency Status](https://gemnasium.com/fredkelly/acts_as_graph_object.png)](https://gemnasium.com/fredkelly/acts_as_graph_object)
+
 ## Installation
 
 ```
