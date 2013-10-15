@@ -1,4 +1,4 @@
-# acts\_as\_graph\_object
+# acts\_as\_graph\_object [![Gem Version](https://badge.fury.io/rb/acts_as_graph_object.png)](http://badge.fury.io/rb/acts_as_graph_object)
 
 ActiveRecord extension that maps models to Facebook Open Graph objects.
 
